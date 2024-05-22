@@ -32,7 +32,7 @@
 To install the `dimensionality_reduction` package, follow these steps:
 
 1. Download the package from GitHub.
-2. Open Command Prompt and navigate to your project directory.
+2. Open Command Prompt and navigate to the directory where you downloaded the package.
 3. Run the installation command:
 
 ```bash
