@@ -1,6 +1,3 @@
-Thanks for the additional details. Here's the updated README file incorporating the specific requirements and installation instructions:
-
----
 
 # dimensionality_reduction
 
@@ -98,4 +95,5 @@ The following libraries are required to use the `dimensionality_reduction` packa
 
 [Aristeidis Tsaknis]  
 [aristeidistsaknis@gmail.com]
+
 
