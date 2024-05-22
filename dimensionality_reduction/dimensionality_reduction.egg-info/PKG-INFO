@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: dimensionality-reduction
+Version: 0.1
+Summary: A package for different dimensionality reduction methods
+Home-page: https://github.com/yourusername/dimensionality_reduction
+Author: Aristeidis Tsaknis
+Author-email: ece01744@uowm.gr
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: scikit-learn
+Requires-Dist: Kneed
+Requires-Dist: Matplotlib
+Requires-Dist: statsmodels
+
+# Dimensionality Reduction
+
+This package provides implementations for various dimensionality reduction methods.
+
+## Installation
+
+You can install the package directly from GitHub:
+
+```sh
+pip install git+https://github.com/yourusername/dimensionality_reduction.git
