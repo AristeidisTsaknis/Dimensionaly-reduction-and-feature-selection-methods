@@ -36,7 +36,7 @@ To install the `dimensionality_reduction` package, follow these steps:
 
 ```bash
 pip install -e .
-
+```
 
 ## Usage
 
