@@ -1,5 +1,3 @@
-
-```markdown
 # dimensionality_reduction
 
 `dimensionality_reduction` is a Python package that provides various implementations of dimensionality reduction and feature selection methods. This package includes popular techniques like PCA, LDA, SVD, LLE, ISOMAP, T-SNE, BORUTA, and more. A key feature of this package is its ability to automatically calculate the optimal number of dimensions for several methods.
@@ -38,7 +36,7 @@ To install the `dimensionality_reduction` package, follow these steps:
 
 ```bash
 pip install -e .
-```
+
 
 ## Usage
 
