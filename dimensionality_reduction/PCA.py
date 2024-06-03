@@ -122,17 +122,3 @@ class PCA:
         return knee_locator.knee
     
 
-
-
-
-from sklearn.datasets import load_iris
-from sklearn.preprocessing import StandardScaler
-iris = load_iris()
-X = iris.data
-
-x_scaled = StandardScaler().fit_transform(X)
-
-
-
-my_pca = PCA()
-my_pca.fit_transform(x_scaled)

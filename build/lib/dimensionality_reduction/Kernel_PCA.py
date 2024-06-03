@@ -85,9 +85,6 @@ class Kernel_PCA():
 
 
     def center_gram_matrix(self, K, training=True):
-        n_samples_X = K.shape[0]
-        n_samples_Y = K.shape[1]
-
         if training:
             row_means = np.mean(K, axis=1, keepdims=True)
             column_means = np.mean(K, axis=0, keepdims=True)
@@ -106,10 +103,7 @@ class Kernel_PCA():
     def standardize_data(self,dataset):
         dataset = StandardScaler().fit_transform(dataset)
         return dataset
-    
-    def calc_covariance_matrix(self,cov_matrix):
-        covariance_matrix = np.cov(cov_matrix, rowvar=False)
-        return covariance_matrix
+
 
     def calc_eigenvector_eigenvalues(self,dataset):
         eigenvalues, eigenvectors = np.linalg.eig(dataset)

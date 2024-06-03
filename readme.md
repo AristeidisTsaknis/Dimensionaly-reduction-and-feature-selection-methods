@@ -1,4 +1,5 @@
 
+```markdown
 # dimensionality_reduction
 
 `dimensionality_reduction` is a Python package that provides various implementations of dimensionality reduction and feature selection methods. This package includes popular techniques like PCA, LDA, SVD, LLE, ISOMAP, T-SNE, BORUTA, and more. A key feature of this package is its ability to automatically calculate the optimal number of dimensions for several methods.
@@ -43,40 +44,69 @@ pip install -e .
 
 Here are some basic examples of how to use the package:
 
-### PCA Example
-
 ```python
-from dimensionality_reduction import PCA
+from dimensionality_reduction import PCA, LDA, svd, Locally_Linear_Embedding, Kernel_PCA, isomap, Factor_analysis, Boruta, ensemble_learning_feature_selection, Kendalls_Tau_Correlation, Spearman_Rank_Correlation, G_MDS
+from sklearn.datasets import load_iris
 
-# Initialize PCA
-pca = PCA()
+# Load sample data
+iris = load_iris()
+x = iris.data
+y = iris.target
 
-# Fit and transform the data
-reduced_data = pca.fit_transform(data,num_of_dimensions)
-```
+# PCA Example
+test = PCA()
+test.fit_transform(x)
 
-### LDA Example
+# LDA Example
+test = LDA()
+test.fit_transform(x, y)
 
-```python
-from dimensionality_reduction import LDA
+# SVD Example
+test = svd()
+test.fit_transform(x)
 
-# Initialize LDA
-lda = LDA()
+# Locally Linear Embedding Example
+test = Locally_Linear_Embedding()
+test.fit_transform(x)
 
-# Fit and transform the data
-reduced_data = lda.fit_transform(data, num_of_dimensions, labels)
-```
+# Kernel PCA Example
+test = Kernel_PCA()
+test.fit_transform(x)
 
-### Automated Dimension Calculation
+# ISOMAP Example
+test = isomap()
+test.fit_transform(x)
 
-```python
-from dimensionality_reduction import PCA
+# Factor Analysis Example
+test = Factor_analysis()
+test.fit_transform(x)
 
-# Initialize PCA 
-pca = PCA()
+# Boruta Example
+test = Boruta()
+results = test.fit(x, y)
+print("Boruta test:", results)
 
-# Fit and transform the data with automated dimension calculation
-reduced_data = pca.fit_transform(data)
+# Ensemble Learning Feature Selection Example
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import GradientBoostingClassifier
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+test = ensemble_learning_feature_selection(estimator=GradientBoostingClassifier())
+results = test.fit(X_train, y_train)
+print("Ensemble test:", results)
+
+# Kendall Tau Correlation Example
+kt = Kendalls_Tau_Correlation()
+print(kt.feature_selection(x, y, 0.4))
+
+# Spearman Rank Correlation Example
+sp = Spearman_Rank_Correlation()
+sp.feature_selection(x, y, 0.4)
+
+# G_MDS Example
+g_mds = G_MDS()
+values, finished = g_mds.explore_dimensions(x)
+g_mds.find_optimal_components(values, finished, x.shape[1])
 ```
 
 ## Requirements
@@ -90,9 +120,8 @@ The following libraries are required to use the `dimensionality_reduction` packa
 - Matplotlib
 - statsmodels
 
-
 ## Author
 
 [Aristeidis Tsaknis]  
 [aristeidistsaknis@gmail.com]
-
+```

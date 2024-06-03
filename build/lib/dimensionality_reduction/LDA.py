@@ -11,7 +11,7 @@ class LDA:
         self.eigenvectors = None
         self.eigenvalues = None
         self.transformed_data = None
-        self.explained_variance_ratio = None 
+
 
     def fit_transform(self, dataset, labels, k = None):
 
@@ -19,12 +19,10 @@ class LDA:
             print("data must me numerical!")
             return
         
-        if k is None:
-            return self.My_LDA_fit_best_k(dataset,labels)
-        
-        if k > min(dataset.shape[1], len(np.unique(labels))) - 1:
-            print("k must be smaller than the number of features -1")
-            return
+        if k is not None:
+            if k > min(dataset.shape[1], len(np.unique(labels))) - 1:
+                print("k must be smaller than the number of features -1")
+                return
         
 
         if not np.issubdtype(np.array(labels).dtype, np.number):
@@ -32,49 +30,29 @@ class LDA:
             labels = encoder.fit_transform(np.array(labels).reshape(-1, 1))
             labels = labels.ravel()
             
-        if k < 1:
-             k = self.find_k_based_on_discriminant_power_rate(eigenvalues,k,dataset.shape[1],labels)
-        else:
-            S_W = self.calc_within_class_scatter_matrix(dataset, labels)
-            S_B = self.calc_between_class_scatter_matrix(dataset, labels)
-
-            S_W_inv = np.linalg.pinv(S_W)
-            matrix = np.dot(S_W_inv, S_B)
-
-            eigenvectors, eigenvalues = self.calc_eigenvector_eigenvalues(matrix)
-            eigenvectors, eigenvalues = self.sort_eigenvectors_eigenvalues(eigenvalues, eigenvectors)
-
-
-
-        self.eigenvectors = eigenvectors[:,:k]
-        self.eigenvalues = eigenvalues[:k]
-
-        self.transformed_data = self.transform( dataset)
-        return self.transformed_data
-
-    def My_LDA_fit_best_k(self,dataset,labels):
-        
-        if not self.is_data_numerical(dataset):
-            print("data must me numerical!")
-            return
-        
+    
         S_W = self.calc_within_class_scatter_matrix(dataset, labels)
         S_B = self.calc_between_class_scatter_matrix(dataset, labels)
 
         S_W_inv = np.linalg.pinv(S_W)
         matrix = np.dot(S_W_inv, S_B)
-        
-        eigenvectors, eigenvalues =self.calc_eigenvector_eigenvalues(matrix)
-        eigenvectors, eigenvalues =self.sort_eigenvectors_eigenvalues(eigenvalues, eigenvectors)
-        total = sum(eigenvalues)
-        self.explained_variance_ratio = [(i / total) for i in sorted(eigenvalues, reverse=True)]
 
-        k = self.find_optimal_components()
-        self.eigenvectors = eigenvectors[:,:k]
-        self.eigenvalues = eigenvalues[:k]
+        self.eigenvectors,  self.eigenvalues = self.calc_eigenvector_eigenvalues(matrix)
+        self.eigenvectors,  self.eigenvalues = self.sort_eigenvectors_eigenvalues( self.eigenvalues,  self.eigenvectors)
+
+
+        if k is None:
+            return self.find_optimal_components()
+        
+        if k < 1:
+            k = self.find_k_based_on_discriminant_power_rate(k,dataset.shape[1],labels)
+
+        self.eigenvectors = self.eigenvectors[:,:k]
+        self.eigenvalues =  self.eigenvalues[:k]
 
         self.transformed_data = self.transform( dataset)
-        return k 
+        return self.transformed_data
+
 
     def calc_eigenvector_eigenvalues(self, dataset):
         eigenvalues, eigenvectors = np.linalg.eig(dataset)
@@ -145,9 +123,10 @@ class LDA:
 
 
     def find_k_based_on_discriminant_power_rate(self,discriminant_power_rate,n_features,class_labels):
-
+        total = sum(self.eigenvalues)
+        explained_variance_ratio = [(i / total) for i in sorted(self.eigenvalues, reverse=True)]
         k = 1
-        while k <= len(self.explained_variance_ratio) and self.explained_variance_ratio[k - 1] < discriminant_power_rate:
+        while k <= len(explained_variance_ratio) and explained_variance_ratio[k - 1] < discriminant_power_rate:
             if k > min(n_features, len(np.unique(class_labels))) - 1:
                 k = k - 1
                 break
@@ -159,8 +138,9 @@ class LDA:
 
 
     def find_optimal_components(self,use_savgol_filter = True):
-        
-        cumulative_var = np.cumsum(self.explained_variance_ratio)
+        total = sum(self.eigenvalues)
+        explained_variance_ratio = [(i / total) for i in sorted(self.eigenvalues, reverse=True)]
+        cumulative_var = np.cumsum(explained_variance_ratio)
         cumulative_var= cumulative_var.real
         window_length = len(cumulative_var)
         
@@ -197,3 +177,4 @@ class LDA:
 
             return knee_locator.knee
         
+

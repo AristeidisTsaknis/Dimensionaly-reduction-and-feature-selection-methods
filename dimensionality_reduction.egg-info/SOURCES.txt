@@ -5,6 +5,7 @@ dimensionality_reduction/Kendall_Tau.py
 dimensionality_reduction/Kernel_PCA.py
 dimensionality_reduction/LDA.py
 dimensionality_reduction/LLE.py
+dimensionality_reduction/Laplacian_eigenmaps.py
 dimensionality_reduction/PCA.py
 dimensionality_reduction/SVD.py
 dimensionality_reduction/Spearman.py
@@ -12,7 +13,9 @@ dimensionality_reduction/__init__.py
 dimensionality_reduction/ensemble_learning.py
 dimensionality_reduction/fast_ica.py
 dimensionality_reduction/isomap.py
+dimensionality_reduction/multidimensional_scaling.py
 dimensionality_reduction/setup.py
+dimensionality_reduction/t_sne.py
 dimensionality_reduction.egg-info/PKG-INFO
 dimensionality_reduction.egg-info/SOURCES.txt
 dimensionality_reduction.egg-info/dependency_links.txt

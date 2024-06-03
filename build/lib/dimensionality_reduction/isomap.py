@@ -11,14 +11,13 @@ from sklearn.decomposition import KernelPCA
 class isomap():
     
     def __init__(self):
-        self.imputer = SimpleImputer(strategy='mean')
         self.nbrs = None
         self.scaler = StandardScaler()
         self.kernel_pca = None
         self.g = None
 
 
-    def fit_transform(self, X, n_components = None,n_neighbors=23,variance_threshold = None, best_num_of_components=False):
+    def fit_transform(self, X, n_components = None,n_neighbors=23):
         self.scaler = StandardScaler()
         X = self.scaler.fit_transform(X)
         features_num =  X.shape[1]
@@ -52,20 +51,6 @@ class isomap():
             eigenvalues = self.kernel_pca.eigenvalues_
             n_components = self.find_optimal_n_components(eigenvalues,use_savgol_filter=True)
             return n_components
-        
-        elif variance_threshold is not None:
-            self.kernel_pca = KernelPCA(n_components=features_num, kernel="precomputed",random_state=42)
-            self.kernel_pca.fit(K)
-            eigenvalues = self.kernel_pca.eigenvalues_
-            n_components = self.find_components_with_variance_threshold(eigenvalues,variance_threshold)
-            self.kernel_pca = KernelPCA(n_components=n_components, kernel="precomputed")
-
-        elif n_components < 1:
-            self.kernel_pca = KernelPCA(n_components=features_num, kernel="precomputed",random_state=42)
-            self.kernel_pca.fit(K)
-            eigenvalues = self.kernel_pca.eigenvalues_
-            n_components = self.find_components_with_variance(eigenvalues,n_components)
-            self.kernel_pca = KernelPCA(n_components=n_components, kernel="precomputed")
         else:
             self.kernel_pca = KernelPCA(n_components=n_components, kernel="precomputed",random_state=42)
             
@@ -92,30 +77,6 @@ class isomap():
         return self.kernel_pca.transform(G_X)
                 
     
-    def find_components_with_variance_threshold(self,eigenvalues,variance_threshold):
-
-        total_var = np.sum(eigenvalues)
-        cumulative_var = np.cumsum(eigenvalues) / total_var
-        k = 1
-        while k < len(cumulative_var) and (cumulative_var[k] - cumulative_var[k - 1]) > variance_threshold:
-            k += 1
-        
-        while cumulative_var[k -1] < 0.8:
-            k+=1
-    
-        print(f"After k = {k}, the increase in variance becomes smaller than {variance_threshold*100}%.")
-        return k
-    
-    def find_components_with_variance(self,eigenvalues,variance):
-        total_var = np.sum(eigenvalues)
-        cumulative_var = np.cumsum(eigenvalues) / total_var
-        k = 1
-        while k < len(cumulative_var) and cumulative_var[k-1] < variance:
-            k += 1
-        
-    
-        print(f"After k = {k}, the increase in variance becomes smaller than {variance*100}%.")
-        return k
 
     def find_optimal_n_components(self,eigenvalues, use_savgol_filter=False):
         eigenvalues = eigenvalues[eigenvalues > 0]

@@ -69,33 +69,7 @@ class PCA:
             k += 1
         return k
 
-
-    def find_best_k(self,eigenvalues,variance_threshold= None):
-
-        total_var = np.sum(eigenvalues)
-        cumulative_var = np.cumsum(eigenvalues) / total_var
-        if variance_threshold is None:
-            variance_threshold = 0.1
-            
-        k = 1
-        while k < len(cumulative_var) and (cumulative_var[k] - cumulative_var[k - 1]) > variance_threshold:
-            k += 1
-        
-        while cumulative_var[k -1] < 0.8:
-            k+=1
-        
-        print(f"After k = {k}, the increase in variance becomes smaller than {variance_threshold*100}%.")
-        return k
-
-    def find_best_k_eblow_point(self, eigenvalues):
-        total_var = np.sum(eigenvalues)
-        cumulative_var = np.cumsum(eigenvalues) / total_var
-        k = np.arange(1, len(cumulative_var) + 1)
-        elbow_point = KneeLocator(k, cumulative_var, curve='concave', direction='increasing')
-
-        return elbow_point.knee
     
-
     def is_data_numerical(self,dataset):
         return np.issubdtype(dataset.dtype, np.number)
 
@@ -143,6 +117,8 @@ class PCA:
             plt.legend()
             plt.grid(True)
             plt.show()
-            
+
+
         return knee_locator.knee
     
+
