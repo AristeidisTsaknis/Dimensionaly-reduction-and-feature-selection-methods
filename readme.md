@@ -1,6 +1,6 @@
 # dimensionality_reduction
 
-`dimensionality_reduction` is a Python package that provides various implementations of dimensionality reduction and feature selection methods. This package includes popular techniques like PCA, LDA, SVD, LLE, ISOMAP, T-SNE, BORUTA, and more. A key feature of this package is its ability to automatically calculate the optimal number of dimensions for several methods.
+`dimensionality_reduction` is a Python package that provides various implementations of dimensionality reduction and feature selection methods. This package includes popular techniques like PCA, LDA, SVD, LLE, ISOMAP, T-SNE, BORUTA, and more. A key feature of this package is its ability to attempt to automatically calculate the optimal number of dimensions for several methods.
 
 ## Features
 
@@ -24,7 +24,7 @@
   - Spearman Correlation Coefficient
 
 - **Automated Dimension Calculation:**
-  - Automatically calculates the optimal number of dimensions for SVD, PCA, LLE, ISOMAP, Factor Analysis, Kernel PCA, Multidimensional Scaling, Laplacian Eigenmaps, Ensemble Learning for Feature Selection, and LDA.
+  - Attempts to automatically calculate the optimal number of dimensions for SVD, PCA, LLE, ISOMAP, Factor Analysis, Kernel PCA, Multidimensional Scaling, Laplacian Eigenmaps, Ensemble Learning for Feature Selection, and LDA.
 
 ## Installation
 
