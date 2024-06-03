@@ -121,4 +121,4 @@ The following libraries are required to use the `dimensionality_reduction` packa
 ## Author
 
 [Aristeidis Tsaknis]  
-[aristeidistsaknis@gmail.com]
+[aristidistsaknis@gmail.com]
